@@ -17,8 +17,8 @@ foreach($cfg->source as $sect => $files) {
 
 if($cfg->min) {
 	require('minifer.php');
-	$result->js = minifyJS($result->js);
-	$result->css = minifyCSS($result->css);
+	$result->js = minify('js', $result->js);
+	$result->css = minify('css', $result->css);
 }
 
 foreach($cfg->output as $sect => $file) {
