@@ -1,7 +1,8 @@
 <?php
 
 function includeAssets($type) {
-    $cfgFile = file_get_contents('buildas/cfg.json');
+    $dir = 'buildas/';
+    $cfgFile = file_get_contents($dir . 'cfg.json');
     $cfg = json_decode($cfgFile);
 
     if(defined('DEBUG') && DEBUG) {

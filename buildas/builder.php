@@ -3,10 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$dir = '../';
 $cfgFile = file_get_contents('cfg.json');
 $cfg = json_decode($cfgFile);
 
-$dir = '../';
 $result = (object) ['js' => '', 'css' => ''];
 foreach($cfg->source as $sect => $files) {
 	foreach($files as $file) {

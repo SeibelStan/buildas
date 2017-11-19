@@ -5,14 +5,11 @@ function minifyJS($input) {
         return false;
     }
     $url = 'https://javascript-minifier.com/raw';
-    $data = [
-        'input' => $input,
-    ];
-    $ch = curl_init();
+    $data = ['input' => $input];
+    $ch = curl_init($url);
     curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_POST => 1,
+        CURLOPT_RETURNTRANSFER => 1,        
         CURLOPT_POSTFIELDS => http_build_query($data)
     ]);
     $minified = curl_exec($ch);
@@ -25,15 +22,11 @@ function minifyCSS($input) {
         return false;
     }
     $url = 'https://cssminifier.com/raw';
-    $data = [
-        'input' => $input,
-    ];
-    $ch = curl_init();
+    $data = ['input' => $input];    
+    $ch = curl_init($url);
     curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_POST => 1,
-        CURLOPT_HTTPHEADER => ["Content-Type: application/x-www-form-urlencoded"],
+        CURLOPT_RETURNTRANSFER => 1,        
         CURLOPT_POSTFIELDS => http_build_query($data)
     ]);
     $minified = curl_exec($ch);
