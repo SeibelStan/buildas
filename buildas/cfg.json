@@ -1,17 +1,18 @@
 {
     "source": {
         "js": [
-            "assets/js/one.js",
-            "assets/js/two.js"
+            "assets\/js\/one.js",
+            "assets\/js\/two.js"
         ],
         "css": [
-            "assets/css/one.css",
-            "assets/css/two.css"
+            "assets\/css\/one.css",
+            "assets\/css\/two.css"
         ]
     },
     "output": {
-        "js": "assets/js/buildas.js",
-        "css": "assets/css/buildas.css"
+        "js": "assets\/js\/buildas.js",
+        "css": "assets\/css\/buildas.css"
     },
-    "min": 1
+    "min": 1,
+    "builded": 1511152537
 }

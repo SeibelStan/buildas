@@ -1,18 +1,17 @@
 <?php
 
-function includeAssets($type) {
-    $dir = 'buildas/';
+function getBuildasConfig($dir = 'buildas/') {
     $cfgFile = file_get_contents($dir . 'cfg.json');
-    $cfg = json_decode($cfgFile);
+    return json_decode($cfgFile);
+}
 
-    if(defined('DEBUG') && DEBUG) {
-        $assets = $cfg->source->$type;
-    }
-    else {
-        $assets = [
-            $cfg->output->$type
-        ];        
-    }
+function isDebug() {
+    return defined('DEBUG') && DEBUG;
+}
+
+function includeAssets($type) {
+    $cfg = getBuildasConfig();
+    $assets = isDebug() ? $cfg->source->$type : [$cfg->output->$type];
 
     $result = '';
     foreach($assets as $file) {
@@ -24,4 +23,20 @@ function includeAssets($type) {
         }
     }
     return $result;
+}
+
+function checkModify($assetsDir = '', $builderDir = 'buildas/') {
+    $cfg = getBuildasConfig($builderDir);
+    $builded = @$cfg->builded;
+    $cfg->source->cfg = ['buildas/cfg.json'];
+
+    $modify = false;
+    foreach($cfg->source as $sect => $files) {
+        foreach($files as $file) {
+            if($builded < filemtime($assetsDir . $file)) {
+                $modify = true;
+            }
+        }
+    }
+    return $modify;
 }
