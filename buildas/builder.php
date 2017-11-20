@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 require('extras.php');
 
 if(!checkModify('../', '')) {
-	die('not modified');
+	die();
 }
 
 $dir = '../';
@@ -31,4 +31,3 @@ foreach($cfg->output as $sect => $file) {
 }
 $cfg->builded = time();
 file_put_contents('cfg.json', json_encode($cfg, 386));
-echo 'builded';
