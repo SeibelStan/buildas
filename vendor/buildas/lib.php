@@ -1,6 +1,7 @@
 <?php
 
 define('BUILDAS_DIR', 'vendor/buildas/');
+define('ASSETS_DIR', '../../');
 
 function minify($type, $input) {
     if(!$input) {

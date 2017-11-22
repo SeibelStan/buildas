@@ -1,4 +1,4 @@
 function two() {
-    console.log($('p').length);
+    console.log(2);
 }
 two();
