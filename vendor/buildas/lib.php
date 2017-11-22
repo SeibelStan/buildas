@@ -1,5 +1,7 @@
 <?php
 
+define('BUILDAS_DIR', 'vendor/buildas/');
+
 function minify($type, $input) {
     if(!$input) {
         return false;
@@ -22,7 +24,8 @@ function minify($type, $input) {
     return $minified;
 }
 
-function getBuildasConfig($dir = 'buildas/') {
+function getBuildasConfig($dir = '') {
+    $dir = $dir ?: BUILDAS_DIR;
     $cfgFile = file_get_contents($dir . 'cfg.json');
     return json_decode($cfgFile);
 }
@@ -47,10 +50,11 @@ function includeAssets($type) {
     return $result;
 }
 
-function checkModify($assetsDir = '', $builderDir = 'buildas/') {
+function checkModify($assetsDir = '', $builderDir = '') {
+    $builderDir = $builderDir ?: BUILDAS_DIR;
     $cfg = getBuildasConfig($builderDir);
     $builded = @$cfg->builded;
-    $cfg->source->cfg = ['buildas/cfg.json'];
+    $cfg->source->cfg = [BUILDAS_DIR . 'cfg.json'];
 
     $modify = false;
     foreach($cfg->source as $sect => $files) {

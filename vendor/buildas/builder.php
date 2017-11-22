@@ -2,19 +2,19 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require('extras.php');
+require('lib.php');
 
-if(!checkModify('../', '')) {
+$assetsDir = '../../';
+if(!checkModify($assetsDir, './')) {
 	die();
 }
 
-$dir = '../';
-$cfg = getBuildasConfig('');
+$cfg = getBuildasConfig('./');
 
 $result = (object) ['js' => '', 'css' => ''];
 foreach($cfg->source as $sect => $files) {
 	foreach($files as $file) {
-		$content = file_get_contents($dir . $file);
+		$content = file_get_contents($assetsDir . $file);
 		$result->$sect .= $content;
 	}
 }
@@ -25,8 +25,8 @@ if(isset($cfg->min) && $cfg->min) {
 }
 
 foreach($cfg->output as $sect => $file) {
-	file_put_contents($dir . $file, $result->$sect);
-	chmod($dir . $file, 0777);
+	file_put_contents($assetsDir . $file, $result->$sect);
+	chmod($assetsDir . $file, 0777);
 }
 $cfg->builded = time();
 file_put_contents('cfg.json', json_encode($cfg, 386));

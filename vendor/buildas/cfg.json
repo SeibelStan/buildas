@@ -1,6 +1,7 @@
 {
     "source": {
         "js": [
+            "assets\/js\/jquery-3.2.1.slim.js",
             "assets\/js\/one.js",
             "assets\/js\/two.js"
         ],
@@ -14,5 +15,5 @@
         "css": "assets\/css\/buildas.css"
     },
     "min": 1,
-    "builded": 1511152537
+    "builded": 1511378619
 }

@@ -1,4 +1,4 @@
 function one() {
-    console.log(1);
+    console.log($('strong').length);
 }
 one();
