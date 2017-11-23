@@ -24,10 +24,11 @@ if(isset($cfg->min) && $cfg->min) {
 }
 
 foreach($cfg->output as $sect => $file) {
-	if($result->$sect) {
-		file_put_contents(ASSETS_DIR . $file, $result->$sect);		
-		chmod(ASSETS_DIR . $file, 0777);		
+	if(!$result->$sect) {
+		continue;
 	}
+	file_put_contents(ASSETS_DIR . $file, $result->$sect);		
+	chmod(ASSETS_DIR . $file, 0777);		
 }
 $cfg->builded = time();
 file_put_contents('cfg.json', json_encode($cfg, 386));
