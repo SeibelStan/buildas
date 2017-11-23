@@ -22,6 +22,9 @@ function minify($type, $input) {
     ]);
     $minified = curl_exec($ch);
     curl_close($ch);
+    if(preg_match('/502 Bad Gateway/', $minified)) {
+        $minified = '';
+    }
     return $minified;
 }
 
