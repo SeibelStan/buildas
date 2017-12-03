@@ -1,7 +1,7 @@
 <?php
 
 define('BUILDAS_DIR', 'vendor/buildas/');
-define('ASSETS_DIR', '../../');
+define('BUILDAS_ASDIR', '../../');
 
 function minify($type, $input) {
     if(!$input) {
@@ -22,7 +22,7 @@ function minify($type, $input) {
     ]);
     $minified = curl_exec($ch);
     curl_close($ch);
-    if(preg_match('/502 Bad Gateway/', $minified)) {
+    if(preg_match('/(502 Bad Gateway|504 Gateway Time-out)/', $minified)) {
         $minified = '';
     }
     return $minified;
@@ -38,17 +38,23 @@ function isDebug() {
     return defined('DEBUG') && DEBUG;
 }
 
-function includeAssets($type) {
+function isOuter($link) {
+    return preg_match('/\/\//', $link);
+}
+
+function includeAssets($type, $root = '') {
     $cfg = getBuildasConfig();
     $assets = isDebug() ? $cfg->source->$type : [$cfg->output->$type];
 
     $result = '';
     foreach($assets as $file) {
+        $outer = isOuter($file);
+        $vadd = '?v=' . md5($file);
         if($type == 'js') {
-            $result .= '<script src="' . $file . '"></script>';
+            $result .= '<script src="' . ($outer ? '' : $root) . $file . $vadd . '"></script>';
         }
         elseif($type == 'css') {
-            $result .= '<link rel="stylesheet" href="' . $file . '">';
+            $result .= '<link rel="stylesheet" href="' . ($outer ? '' : $root) . $file . $vadd . '">';
         }
     }
     return $result;
@@ -63,7 +69,8 @@ function checkModify($assetsDir = '', $builderDir = '') {
     $modify = false;
     foreach($cfg->source as $sect => $files) {
         foreach($files as $file) {
-            if($builded < filemtime($assetsDir . $file)) {
+            $outer = isOuter($file);
+            if(!$outer && $builded < filemtime($assetsDir . $file)) {
                 $modify = true;
             }
         }
