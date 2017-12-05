@@ -30,8 +30,9 @@ foreach($cfg->output as $sect => $file) {
 		$builded = 0;
 		continue;
 	}
-	file_put_contents(BUILDAS_ASDIR . $file, $result->$sect);		
-	chmod(BUILDAS_ASDIR . $file, 0777);		
+	file_put_contents(BUILDAS_ASDIR . $file, $result->$sect);	
+	chmod(BUILDAS_ASDIR . $file, 0777);	
+	echo md5(file_get_contents(BUILDAS_ASDIR . $file)) . "<br>";	
 }
-$cfg->builded = $builded;
+echo $cfg->builded = $builded;
 file_put_contents('cfg.json', json_encode($cfg, 386));
