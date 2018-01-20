@@ -10,7 +10,7 @@ if(!checkModify(BUILDAS_ASDIR, './')) {
 
 $cfg = getBuildasConfig('./');
 
-$result = (object)['js' => '', 'css' => ''];
+$result = (object) ['js' => '', 'css' => ''];
 foreach($cfg->source as $sect => $files) {
 	foreach($files as $file) {
 		$outer = isOuter($file);
